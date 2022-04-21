@@ -9,3 +9,6 @@ El requerimiento funcional de la actividad es ejecutar el apartado de Login, el 
 2- En el campo de user digiar "admin" o "client" y colocar cualquier contraseña.
 3- Acceder por el boton de Login.
 4- En el caso de querer volver se ecuentra el botón Back.
+
+# Uml Diagram
+<img src="Anteproyecto.png" alt="Diagrama"/>
