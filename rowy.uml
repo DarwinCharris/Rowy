@@ -1,0 +1,76 @@
+@startuml
+'fig_5'
+left to right direction
+skinparam monochrome true
+skinparam handwritten false
+hide class circle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+
+class plan1{
++complainmentRequest(): none
+Maintence(): date
+}
+
+class plan2{
++Maintence(): date
+}
+
+class plan3{
+}
+
+class plan{
++ver(): bool
++pay(): none
++vehicleTax(): none
++soat(): none
++tecnimechanic(): none
+}
+class client_car{
+-licensePlate:string
+-numVIN: string
+-dateB: date
+-color: string
+-brand: string
+-origin: string
+}
+class clientedata{
+-cedula: int
+-name: string
+-lastname: string
+-plan: int
+-telephone: int
+-paydate: date
+#cardnumber: string
+#expdate: string
+#cod: int
++carMod(): none
++modCard(): none
++modNum(): none
+}
+class admin{
+-name: string
+-lastname: string
+-telephone: int
+-salary: float
++addclient(): none
++removeclient(): none
++modClient(): none
++modNum(): none
+}
+class User{
+-userid: string
+-mail: string
+-password: string
+-status: string
+-registerDate: date
++verifyLogin(): bool
+}
+plan1  ---> plan: >
+plan2  ---> plan: >
+plan3  ---> plan: >
+plan "1"---* client_car: >
+client_car "1"---> clientedata: >
+admin ---> User: >
+clientedata ---> User: >
+@enduml
