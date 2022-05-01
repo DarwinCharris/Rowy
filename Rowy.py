@@ -8,6 +8,7 @@ from msilib.schema import Error
 import mysql.connector
 from mysql.connector import Error
 from re import search
+import Classes as cs
 # Conectar a la base de datos
 try:
     conexion = mysql.connector.connect(
@@ -32,114 +33,224 @@ imagen2 = PhotoImage(file="2.png")
 botonLogin = PhotoImage(file="boton.png")
 imagen3 = PhotoImage(file="3.png")
 botonBack = PhotoImage(file="back.png")
-botonAdd1 = PhotoImage(file = "AddClient.png")
-btnModi = PhotoImage(file = "Mod.png")
+botonAdd1 = PhotoImage(file="AddClient.png")
+btnModi = PhotoImage(file="Mod.png")
 btnDele = PhotoImage(file="Delete.png")
-imagen2_1 = PhotoImage(file = "2_1.png")
+imagen2_1 = PhotoImage(file="2_1.png")
+btnnext = PhotoImage(file = "next.png")
+imagen2_2 = PhotoImage(file ="2_2.png")
+
+# Objeto cliente y admin
+administrator = cs.admin(None, None, None, None, None)
+
 # Pagína principal
 
 
 def Mainmenu():
-    
-        
-    def agregarClient ():
-        def val2_1 (sname:str, sLname:str, smail:str, spword:str,sid:str):
-            #Metodo que permite validar los campos
-            #creación de 5 claves para poder avanzar
-            keyN=False
-            KeyLN= False
-            KeyM = False
-            KeyP = False
-            KeyI=False
-            #Validación nombre
-            if(sname == ""):
+
+    def agregarClient():
+        #Lanzar a la sig pagina
+        def add2_2 ():
+            def next2():
+                def validate():
+                    ErrorPhone.config(text="")
+                    ErrorPlan.config(text="")
+                    ErrorCnumber.config(text="")
+                    ErrorEdate.config(text="")
+                    ErrorCSV.config(text="")
+                    #Llaves para validar
+                    keyPhone = False
+                    keyPlan = False
+                    keyCnumber = False
+                    keyEdate = False
+                    keycvs = False
+                    #Validar telefono 
+                    if(phone == ""):
+                        ErrorPhone.config(text="")
+                        ErrorPhone.config(text="Empty field")
+                    else:
+                        #Buscar en base de datos [Pendiente]
+                        keyPhone = True
+                    #Validar plan
+                    if(plan == ""):
+                        ErrorPlan.config(text="")
+                        ErrorPlan.config(text="Empty field")
+                    else:
+                        if(plan<1 or plan>3):
+                            ErrorPlan.config(text="")
+                            ErrorPlan.config(text="Invalid plan")
+                        else: 
+                            keyPlan = True
+                    #Validar Cnumber
+                    #Ver como se valida eso
+                    #continuarrr
+                phone = txtphone.get()
+                plan = txtPlan.get()
+                cnumber = txtCnumber.get()
+                edate = txtEdate.get()
+                csv = txtCSV.get()
+            for ele in app.winfo_children():
+                ele.destroy()
+            interfaz = Canvas(app)
+            interfaz.pack()
+            background2_2 = Label(interfaz, image=imagen2_2)
+            background2_2.pack()
+            #Campos de texto
+            def validate_cc(text:str):
+                return text.isdecimal()
+            txtphone = Entry(app, bg="grey89", validate= "key", validatecommand=(app.register(validate_cc), "%S"))
+            txtphone.place(x=245, y=220, width=275, height=55)
+            txtPlan = Entry(app, bg="grey89", validate= "key", validatecommand=(app.register(validate_cc), "%S"))
+            txtPlan.place(x=557, y=220, width=275, height=55)
+            txtCnumber = Entry(app, bg="grey89")
+            txtCnumber.place(x=245, y=339, width=275, height=55)
+            txtEdate = Entry(app, bg="grey89")
+            txtEdate.place(x=557, y=339, width=275, height=55)
+            txtCSV = Entry(app, bg="grey89", validate= "key", validatecommand=(app.register(validate_cc), "%S"), show="*")
+            txtCSV.place(x=245, y=448, width=275, height=55)
+            #Boton next2
+            btnNext2 = Button(image=btnnext) #agregar metodo de validaciones
+            btnNext2.place(x=630, y=448, height=51, width=136)
+            btnNext2.configure(borderwidth=0)
+            #Label error
+            ErrorPhone = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorPhone.place(x=245, y=276)
+            ErrorPlan = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorPlan.place(x=557, y=276)
+            ErrorCnumber = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorCnumber.place(x=245, y=400)
+            ErrorEdate = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorEdate.place(x=557, y=400)
+            ErrorCSV = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorCSV.place(x=245, y=505)
+        #Metodo del boton next
+        def next1():
+            #Validación de campos
+            def val2_1():
+                
                 ErrorName.config(text="")
-                ErrorName.config(text="Empty Field")
-            else:
-                KeyN = True
-            #Validar Apellido
-            if(sLname == ""):
-                ErrorLName.config(text ="")
-                ErrorLName.config(text="Empty Field")
-            else:
-                KeyLN = True
-            #validar Correo
-            if(smail == ""):
+                ErrorLName.config(text="")
                 ErrorMail.config(text="")
-                ErrorMail.config(text="Empty Field")
-            else:
-                #No permitir que el correo tenga el dominio de la empresa
-                if search("@rowy.com", smail):
-                    ErrorMail.config(text="")
-                    ErrorMail.config(text="Mail not available")
-                #Comprobar si el email está ocupado 
+                ErrorPword.config(text="")
+                ErrorID.config(text="")
+                # Metodo que permite validar los campos
+                # creación de 5 llaves para poder avanzar
+                keyN = 0
+                KeyLN = 0
+                KeyM = 0
+                KeyP = 0
+                KeyI = 0
+                # Validación nombre
+                if(sname == ""):
+                    ErrorName.config(text="")
+                    ErrorName.config(text="Empty Field")
                 else:
-                    cursor = conexion.cursor()
-                    cursor.execute("SELECT mail FROM Clientes WHERE mail='"+smail+"'")
-                    mail = cursor.fetchone()
-                    print(mail)
-                    if(mail != None):
+                    keyN = 1
+                # Validar Apellido
+                if(sLname == ""):
+                    ErrorLName.config(text="")
+                    ErrorLName.config(text="Empty Field")
+                else:
+                    KeyLN = 1
+                # validar Correo
+                if(smail == ""):
+                    ErrorMail.config(text="")
+                    ErrorMail.config(text="Empty Field")
+                else:
+                    # No permitir que el correo tenga el dominio de la empresa
+                    if search("@rowy.com", smail):
                         ErrorMail.config(text="")
                         ErrorMail.config(text="Mail not available")
+                    # Comprobar si el email está ocupado
                     else:
-                        KeyM = True
-                        print("correo listooo")
-            #Validar Contrasela
-            if(spword == ""):
-                ErrorPword.config(text="")
-                ErrorPword.config(text="Empty Field")
-            else:
-                KeyP = True
-            #Validar Cedula
-            if(sid == ""):
-                ErrorID.config(text="")
-                ErrorID.config(text="Empty Field")
-            else:
-                #Validar si está en la base de datos
-                cursor = conexion.cursor()
-                cursor.execute("SELECT cedula FROM Clientes WHERE cedula="+sid)#Ver si esto funciona pq ced es numero
-                ced = cursor.fetchone()
-                if(ced != None):
-                    ErrorID.config(text="")
-                    ErrorID.config(text="The client already exists")
+                        cursor = conexion.cursor()
+                        cursor.execute(
+                            "SELECT mail FROM Clientes WHERE mail='"+smail+"'")
+                        mail = cursor.fetchone()
+                        if(mail != None):
+                            ErrorMail.config(text="")
+                            ErrorMail.config(text="Mail not available")
+                        else:
+                            #comprobar si tiene alguno de los dominios validos
+                            if(search("@gmail.com",smail) or search("@hotmail.com",smail) or search("@outlook.com",smail) or search("@yahoo.com", smail)):
+                                KeyM = 1
+                            else: 
+                                ErrorMail.config(text="")
+                                ErrorMail.config(text="Mail not available")
+                # Validar Contrasela
+                if(spword == ""):
+                    ErrorPword.config(text="")
+                    ErrorPword.config(text="Empty Field")
                 else:
-                    KeyI =True
-                #condicion todas las llaves son correctas lance la pagina de los datos secundarios 
+                    KeyP = 1
+                # Validar Cedula
+                if(sid == ""):
+                    ErrorID.config(text="")
+                    ErrorID.config(text="Empty Field")
+                else:
+                    # Validar si está en la base de datos
+                    cursor = conexion.cursor()
+                    # Ver si esto funciona pq ced es numero
+                    cursor.execute("SELECT cedula FROM Clientes WHERE cedula='"+sid+"'")
+                    ced = cursor.fetchone()
+                    if(ced != None):
+                        ErrorID.config(text="")
+                        ErrorID.config(text="The client already exists")
+                    else:
+                        if(len(sid)!= 10):
+                            ErrorID.config(text="")
+                            ErrorID.config(text="Invalid CC")
+                        else:
+                            KeyI = 1
+                    # condicion todas las llaves son correctas lance la pagina de los datos secundarios
+                
+                if(keyN==1 and KeyLN ==1 and KeyM ==1 and KeyP ==1 and KeyI ==True):
+                    #Acá toca rescatar las variables, meterlas en un objeto de la calse clientdata para al final meterla a la db
+                    add2_2()
+            sname = txtname.get()
+            sLname = txtLname.get()
+            smail = txtEmail.get()
+            spword = txtPword.get()
+            sid = txtID.get()
+            val2_1()
+            
             
 
-                
-        #Agregar el fondo
+        # Agregar el fondo
         for ele in app.winfo_children():
             ele.destroy()
         interfaz = Canvas(app)
         interfaz.pack()
         background2_1 = Label(interfaz, image=imagen2_1)
         background2_1.pack()
-        #botones del panel lateral
-        botonMod = Button(image= btnModi)
+        # botones del panel lateral
+        botonMod = Button(image=btnModi)
         botonMod.place(x=23, y=267, height=53, width=168)
         botonMod.configure(borderwidth=0)
-        botonDelete = Button(image= btnDele)
+        botonDelete = Button(image=btnDele)
         botonDelete.place(x=22, y=355, height=53, width=176)
         botonDelete.configure(borderwidth=0)
-        #Campos de texto
+        # Campos de texto
         txtname = Entry(app, bg="grey89")
         txtname.place(x=245, y=220, width=275, height=55)
         txtLname = Entry(app, bg="grey89")
         txtLname.place(x=557, y=220, width=275, height=55)
         txtEmail = Entry(app, bg="grey89")
         txtEmail.place(x=245, y=339, width=275, height=55)
-        txtPword = Entry(app, bg="grey89")
+        txtPword = Entry(app, bg="grey89", show="*")
         txtPword.place(x=557, y=339, width=275, height=55)
-        txtID = Entry(app, bg="grey89")
-        txtID.place(x=245, y=447, width=275, height=55)
-        #Obtener la info de los campos de texto
+        def validate_cc(text:str):
+            return text.isdecimal()
+        txtID = Entry(app, bg="grey89", validate= "key", validatecommand=(app.register(validate_cc), "%S"))
+        txtID.place(x=245, y=448, width=275, height=55)
+        # Obtener la info de los campos de texto
         sname = txtname.get()
         sLname = txtLname.get()
         smail = txtEmail.get()
         spword = txtPword.get()
         sid = txtID.get()
-        #Campos de texto para errores
+        
+        # Label para errores
         ErrorName = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
         ErrorName.place(x=245, y=276)
         ErrorLName = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
@@ -150,7 +261,11 @@ def Mainmenu():
         ErrorPword.place(x=557, y=400)
         ErrorID = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
         ErrorID.place(x=245, y=505)
-    
+        #Botón next 
+        btnNext = Button(image=btnnext, command=next1)
+        btnNext.place(x=630, y=448, height=51, width=136)
+        btnNext.configure(borderwidth=0)
+
     # Lanzar la ventana Admin
     def Admin():
         for ele in app.winfo_children():
@@ -163,13 +278,13 @@ def Mainmenu():
         botonBack1.place(x=46, y=450, height=50, width=105)
         botonBack1.configure(height=2,
                              width=12)
-        botonAdd = Button(image= botonAdd1, command=agregarClient)
+        botonAdd = Button(image=botonAdd1, command=agregarClient)
         botonAdd.place(x=20, y=191, height=54, width=181)
         botonAdd.configure(borderwidth=0)
-        botonMod = Button(image= btnModi)
+        botonMod = Button(image=btnModi)
         botonMod.place(x=23, y=267, height=53, width=168)
         botonMod.configure(borderwidth=0)
-        botonDelete = Button(image= btnDele)
+        botonDelete = Button(image=btnDele)
         botonDelete.place(x=22, y=355, height=53, width=176)
         botonDelete.configure(borderwidth=0)
 
@@ -182,70 +297,82 @@ def Mainmenu():
         background3.pack()
         botonBack2 = Button(text="Back", image=botonBack, command=Mainmenu)
         botonBack2.place(x=813, y=420, height=50, width=105)
-    
-
-    def validarAdmin(c1: Str, c2: Str):
-        # Conseguir el email en la base de datos
-        cursor = conexion.cursor()
-        cursor.execute("SELECT mail FROM Admin WHERE mail='"+c1+"'")
-        mail = cursor.fetchone()
-        print(mail)  # Borrar despues
-        # validar si está, si no es none, significa que está
-        if(mail != None):
-            print("hurra")
-            # Comporbar si la contraseña está bien
-            cursor.execute(
-                "SELECT password FROM Admin WHERE mail='"+c1+"' AND password='"+c2+"'")
-            passw = cursor.fetchone()
-            print(passw)
-            # validar si la contraseña es correcta
-
-            if(passw != None):
-                print("Contraseña correcta")
-                # Lanzar Admin page
-                Admin()
-            else:
-                print("COntraseña incorrecta")
-                Error.config(text="")
-                Error.config(text="Invalid password")
-        else:
-            print("email no existe")
-            Error.config(text="")
-            Error.config(text="Invalid mail")
-    # Validar cliente
-
-    def validarClient(c1: Str, c2: Str):
-        # Conseguir el email en la base de datos
-        cursor = conexion.cursor()
-        cursor.execute("SELECT mail FROM Clientes WHERE mail='"+c1+"'")
-        mail = cursor.fetchone()
-        print(mail)
-        # validar si está, si no es none, significa que está
-        if(mail != None):
-            print("hurra")
-            # Comporbar si la contraseña está bien
-            cursor.execute(
-                "SELECT password FROM Clientes WHERE mail='"+c1+"' AND password='"+c2+"'")
-            passw = cursor.fetchone()
-            print(passw)
-            # validar si la contraseña es correcta
-            contraseña = "('"+c2+"',)"
-            if(passw != None):
-                print("Contraseña correcta")
-                # Lanzar Admin page
-                Client()
-            else:
-                print("COntraseña incorrecta")
-                Error.config(text="")
-                Error.config(text="Invalid password")
-
-        else:
-            print("email no existe")
-            Error.config(text="")
-            Error.config(text="Invalid mail")
 
     # Comando boton Login
     def login():
+        # Validar cliente
+        def validarClient(c1: Str, c2: Str):
+            # Conseguir el email en la base de datos
+            cursor = conexion.cursor()
+            cursor.execute("SELECT mail FROM Clientes WHERE mail='"+c1+"'")
+            mail = cursor.fetchone()
+
+            # validar si está, si no es none, significa que está
+            if(mail != None):
+                # Comporbar si la contraseña está bien
+                cursor.execute(
+                    "SELECT password FROM Clientes WHERE mail='"+c1+"' AND password='"+c2+"'")
+                passw = cursor.fetchone()
+                # validar si la contraseña es correcta
+                contraseña = "('"+c2+"',)"
+                if(passw != None):
+                    
+                    # Lanzar Admin page
+                    Client()
+                else:
+                    Error.config(text="")
+                    Error.config(text="Invalid password")
+            else:
+                Error.config(text="")
+                Error.config(text="Invalid mail")
+        # validad admin
+
+        def validarAdmin(c1: Str, c2: Str):
+            # Conseguir el email en la base de datos
+            cursor = conexion.cursor()
+            cursor.execute("SELECT mail FROM Admin WHERE mail='"+c1+"'")
+            mail = cursor.fetchone()
+
+            # validar si está, si no es none, significa que está
+            if(mail != None):
+
+                # Comporbar si la contraseña está bien
+                cursor.execute(
+                    "SELECT password FROM Admin WHERE mail='"+c1+"' AND password='"+c2+"'")
+                passw = cursor.fetchone()
+
+                # validar si la contraseña es correcta
+
+                if(passw != None):
+                    
+                    
+                    cursor.execute(
+                        "SELECT cedula FROM Admin WHERE mail='"+c1+"' AND password='"+c2+"'")
+                    cedula = cursor.fetchone()
+
+                    cursor.execute(
+                        "SELECT name FROM Admin WHERE mail='"+c1+"' AND password='"+c2+"'")
+                    name = cursor.fetchone()
+                    cursor.execute(
+                        "SELECT lasName FROM Admin WHERE mail='"+c1+"' AND password='"+c2+"'")
+                    Aped = cursor.fetchone()
+                    # Se agregan los atributos del objeto administrator
+                    administrator.cc = cedula
+                    administrator.name = name
+                    administrator.lastname = Aped
+                    administrator.mail = mail
+                    administrator.password = passw
+                    # Lanzar Admin page
+                    Admin()
+
+                else:
+
+                    Error.config(text="")
+                    Error.config(text="Invalid password")
+            else:
+
+                Error.config(text="")
+                Error.config(text="Invalid mail")
 
         Error.config(text="")
         c1 = txt1.get()
@@ -277,7 +404,7 @@ def Mainmenu():
     txt1.place(x=514, y=200, width=400, height=54)
     txt2 = Entry(app, bg="grey89", show="*")
     txt2.place(x=514, y=326, width=400, height=54)
-    #Label de error 
+    # Label de error
     Error = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
     Error.place(x=514, y=400)
 
