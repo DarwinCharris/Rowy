@@ -42,7 +42,7 @@ imagen2_2 = PhotoImage(file ="2_2.png")
 
 # Objeto cliente y admin
 administrator = cs.admin(None, None, None, None, None)
-
+#Agregar un objeto cliente con todos sus atributos nulos 
 # Pagína principal
 
 
@@ -84,11 +84,14 @@ def Mainmenu():
                     #Validar Cnumber
                     #Ver como se valida eso
                     #continuarrr
+                    
                 phone = txtphone.get()
                 plan = txtPlan.get()
                 cnumber = txtCnumber.get()
                 edate = txtEdate.get()
                 csv = txtCSV.get()
+                administrator.addclient(sname, sLname, smail, spword, sid, phone, plan, cnumber, edate, csv)# todos los parametros
+                
             for ele in app.winfo_children():
                 ele.destroy()
             interfaz = Canvas(app)
@@ -109,7 +112,7 @@ def Mainmenu():
             txtCSV = Entry(app, bg="grey89", validate= "key", validatecommand=(app.register(validate_cc), "%S"), show="*")
             txtCSV.place(x=245, y=448, width=275, height=55)
             #Boton next2
-            btnNext2 = Button(image=btnnext) #agregar metodo de validaciones
+            btnNext2 = Button(image=btnnext, command=next2) #agregar metodo de validaciones
             btnNext2.place(x=630, y=448, height=51, width=136)
             btnNext2.configure(borderwidth=0)
             #Label error
@@ -206,6 +209,7 @@ def Mainmenu():
                 
                 if(keyN==1 and KeyLN ==1 and KeyM ==1 and KeyP ==1 and KeyI ==True):
                     #Acá toca rescatar las variables, meterlas en un objeto de la calse clientdata para al final meterla a la db
+                    #Colocar las variables obtenidas como atributos del objeto cliente
                     add2_2()
             sname = txtname.get()
             sLname = txtLname.get()
@@ -265,6 +269,7 @@ def Mainmenu():
         btnNext = Button(image=btnnext, command=next1)
         btnNext.place(x=630, y=448, height=51, width=136)
         btnNext.configure(borderwidth=0)
+        print(administrator.lastname)
 
     # Lanzar la ventana Admin
     def Admin():
