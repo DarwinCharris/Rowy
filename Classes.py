@@ -46,12 +46,29 @@ class plan3(plan):
 
 class client_car(plan):
     def _init_(self, licenseplate: str, numVIN: str, dateB: str, color: str, brand: str, origin: str):
-        pass
+        self.licenseplate = licenseplate
+        self.numVIN =numVIN
+        self.dateB = dateB
+        self.color = color
+        self.brand = brand
+        self.origin = origin
+        
 
 
 class clientdata(client_car):
-    def __init__(self, cedula: int, name: str, lastname: str, plan: int, telephone: int, paydate: str, cardnumber: str, expdate: str, cod: int):
-        pass
+    def __init__(self, cedula: str, name: str, lastname: str, plan: str, telephone: str, paydate: str, cardnumber: str, expdate: str, cod: str, mail: str, password: str):
+        self.cedula = cedula
+        self.name = name
+        self.lastname = lastname
+        self.plan = plan
+        self.telephone = telephone
+        self.paydate = paydate
+        self.cardnumber = cardnumber
+        self.expdate = expdate
+        self.cod = cod
+        self.mail = mail
+        self.password = password
+    
 
         def carmod():
             pass

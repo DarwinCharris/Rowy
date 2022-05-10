@@ -37,20 +37,24 @@ botonAdd1 = PhotoImage(file="AddClient.png")
 btnModi = PhotoImage(file="Mod.png")
 btnDele = PhotoImage(file="Delete.png")
 imagen2_1 = PhotoImage(file="2_1.png")
-btnnext = PhotoImage(file = "next.png")
-imagen2_2 = PhotoImage(file ="2_2.png")
+btnnext = PhotoImage(file="next.png")
+imagen2_2 = PhotoImage(file="2_2.png")
 
 # Objeto cliente y admin
 administrator = cs.admin(None, None, None, None, None)
-#Agregar un objeto cliente con todos sus atributos nulos 
+# Agregar un objeto cliente con todos sus atributos nulos
+client = cs.clientdata(None, None, None, None, None,
+                       None, None, None, None, None, None)
+
+
 # Pagína principal
 
 
 def Mainmenu():
 
     def agregarClient():
-        #Lanzar a la sig pagina
-        def add2_2 ():
+        # Lanzar a la sig pagina
+        def add2_2():
             def next2():
                 def validate():
                     ErrorPhone.config(text="")
@@ -58,79 +62,95 @@ def Mainmenu():
                     ErrorCnumber.config(text="")
                     ErrorEdate.config(text="")
                     ErrorCSV.config(text="")
-                    #Llaves para validar
+                    # Llaves para validar
                     keyPhone = False
                     keyPlan = False
                     keyCnumber = False
                     keyEdate = False
                     keycvs = False
-                    #Validar telefono 
+                    # Validar telefono
                     if(phone == ""):
                         ErrorPhone.config(text="")
                         ErrorPhone.config(text="Empty field")
                     else:
-                        #Buscar en base de datos [Pendiente]
+                        # Buscar en base de datos [Pendiente]
                         keyPhone = True
-                    #Validar plan
+                    # Validar plan
                     if(plan == ""):
                         ErrorPlan.config(text="")
                         ErrorPlan.config(text="Empty field")
                     else:
-                        if(plan<1 or plan>3):
+                        if(plan < 1 or plan > 3):
                             ErrorPlan.config(text="")
                             ErrorPlan.config(text="Invalid plan")
-                        else: 
+                        else:
                             keyPlan = True
-                    #Validar Cnumber
-                    #Ver como se valida eso
-                    #continuarrr
-                    
+                    # Validar Cnumber
+                    # Ver como se valida eso
+                    # continuarrr
+
                 phone = txtphone.get()
                 plan = txtPlan.get()
                 cnumber = txtCnumber.get()
                 edate = txtEdate.get()
                 csv = txtCSV.get()
-                administrator.addclient(sname, sLname, smail, spword, sid, phone, plan, cnumber, edate, csv)# todos los parametros
-                
+                client.telephone = phone
+                client.plan = plan
+                client.cardnumber = cnumber
+                client.expdate = edate
+                client.cod = csv
+                administrator.addclient(client.name, client.lastname, client.mail, client.password, client.password,
+                                        client.telephone, client.plan, client.cardnumber, client.expdate, client.cod)  # todos los parametros
+
             for ele in app.winfo_children():
                 ele.destroy()
             interfaz = Canvas(app)
             interfaz.pack()
             background2_2 = Label(interfaz, image=imagen2_2)
             background2_2.pack()
-            #Campos de texto
-            def validate_cc(text:str):
+            # Campos de texto
+
+            def validate_cc(text: str):
                 return text.isdecimal()
-            txtphone = Entry(app, bg="grey89", validate= "key", validatecommand=(app.register(validate_cc), "%S"))
+            txtphone = Entry(app, bg="grey89", validate="key",
+                             validatecommand=(app.register(validate_cc), "%S"))
             txtphone.place(x=245, y=220, width=275, height=55)
-            txtPlan = Entry(app, bg="grey89", validate= "key", validatecommand=(app.register(validate_cc), "%S"))
+            txtPlan = Entry(app, bg="grey89", validate="key",
+                            validatecommand=(app.register(validate_cc), "%S"))
             txtPlan.place(x=557, y=220, width=275, height=55)
             txtCnumber = Entry(app, bg="grey89")
             txtCnumber.place(x=245, y=339, width=275, height=55)
             txtEdate = Entry(app, bg="grey89")
             txtEdate.place(x=557, y=339, width=275, height=55)
-            txtCSV = Entry(app, bg="grey89", validate= "key", validatecommand=(app.register(validate_cc), "%S"), show="*")
+            txtCSV = Entry(app, bg="grey89", validate="key", validatecommand=(
+                app.register(validate_cc), "%S"), show="*")
             txtCSV.place(x=245, y=448, width=275, height=55)
-            #Boton next2
-            btnNext2 = Button(image=btnnext, command=next2) #agregar metodo de validaciones
+            # Boton next2
+            # agregar metodo de validaciones
+            btnNext2 = Button(image=btnnext, command=next2)
             btnNext2.place(x=630, y=448, height=51, width=136)
             btnNext2.configure(borderwidth=0)
-            #Label error
-            ErrorPhone = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            # Label error
+            ErrorPhone = Label(app, text="", font=20,
+                               fg="#E41111", bg="#FAFBFD")
             ErrorPhone.place(x=245, y=276)
-            ErrorPlan = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorPlan = Label(app, text="", font=20,
+                              fg="#E41111", bg="#FAFBFD")
             ErrorPlan.place(x=557, y=276)
-            ErrorCnumber = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorCnumber = Label(app, text="", font=20,
+                                 fg="#E41111", bg="#FAFBFD")
             ErrorCnumber.place(x=245, y=400)
-            ErrorEdate = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorEdate = Label(app, text="", font=20,
+                               fg="#E41111", bg="#FAFBFD")
             ErrorEdate.place(x=557, y=400)
             ErrorCSV = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
             ErrorCSV.place(x=245, y=505)
-        #Metodo del boton next
+        # Metodo del boton next
+
         def next1():
-            #Validación de campos
+            # Validación de campos
             def val2_1():
-                
+
                 ErrorName.config(text="")
                 ErrorLName.config(text="")
                 ErrorMail.config(text="")
@@ -174,10 +194,10 @@ def Mainmenu():
                             ErrorMail.config(text="")
                             ErrorMail.config(text="Mail not available")
                         else:
-                            #comprobar si tiene alguno de los dominios validos
-                            if(search("@gmail.com",smail) or search("@hotmail.com",smail) or search("@outlook.com",smail) or search("@yahoo.com", smail)):
+                            # comprobar si tiene alguno de los dominios validos
+                            if(search("@gmail.com", smail) or search("@hotmail.com", smail) or search("@outlook.com", smail) or search("@yahoo.com", smail)):
                                 KeyM = 1
-                            else: 
+                            else:
                                 ErrorMail.config(text="")
                                 ErrorMail.config(text="Mail not available")
                 # Validar Contrasela
@@ -194,22 +214,28 @@ def Mainmenu():
                     # Validar si está en la base de datos
                     cursor = conexion.cursor()
                     # Ver si esto funciona pq ced es numero
-                    cursor.execute("SELECT cedula FROM Clientes WHERE cedula='"+sid+"'")
+                    cursor.execute(
+                        "SELECT cedula FROM Clientes WHERE cedula='"+sid+"'")
                     ced = cursor.fetchone()
                     if(ced != None):
                         ErrorID.config(text="")
                         ErrorID.config(text="The client already exists")
                     else:
-                        if(len(sid)!= 10):
+                        if(len(sid) != 10):
                             ErrorID.config(text="")
                             ErrorID.config(text="Invalid CC")
                         else:
                             KeyI = 1
                     # condicion todas las llaves son correctas lance la pagina de los datos secundarios
-                
-                if(keyN==1 and KeyLN ==1 and KeyM ==1 and KeyP ==1 and KeyI ==True):
-                    #Acá toca rescatar las variables, meterlas en un objeto de la calse clientdata para al final meterla a la db
-                    #Colocar las variables obtenidas como atributos del objeto cliente
+
+                if(keyN == 1 and KeyLN == 1 and KeyM == 1 and KeyP == 1 and KeyI == True):
+                    # Acá toca rescatar las variables, meterlas en un objeto de la calse clientdata para al final meterla a la db
+                    # Colocar las variables obtenidas como atributos del objeto cliente
+                    client.name = sname
+                    client.lastname = sLname
+                    client.mail = smail
+                    client.password = spword
+                    client.cedula = sid
                     add2_2()
             sname = txtname.get()
             sLname = txtLname.get()
@@ -217,8 +243,6 @@ def Mainmenu():
             spword = txtPword.get()
             sid = txtID.get()
             val2_1()
-            
-            
 
         # Agregar el fondo
         for ele in app.winfo_children():
@@ -243,9 +267,11 @@ def Mainmenu():
         txtEmail.place(x=245, y=339, width=275, height=55)
         txtPword = Entry(app, bg="grey89", show="*")
         txtPword.place(x=557, y=339, width=275, height=55)
-        def validate_cc(text:str):
+
+        def validate_cc(text: str):
             return text.isdecimal()
-        txtID = Entry(app, bg="grey89", validate= "key", validatecommand=(app.register(validate_cc), "%S"))
+        txtID = Entry(app, bg="grey89", validate="key",
+                      validatecommand=(app.register(validate_cc), "%S"))
         txtID.place(x=245, y=448, width=275, height=55)
         # Obtener la info de los campos de texto
         sname = txtname.get()
@@ -253,7 +279,7 @@ def Mainmenu():
         smail = txtEmail.get()
         spword = txtPword.get()
         sid = txtID.get()
-        
+
         # Label para errores
         ErrorName = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
         ErrorName.place(x=245, y=276)
@@ -265,7 +291,7 @@ def Mainmenu():
         ErrorPword.place(x=557, y=400)
         ErrorID = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
         ErrorID.place(x=245, y=505)
-        #Botón next 
+        # Botón next
         btnNext = Button(image=btnnext, command=next1)
         btnNext.place(x=630, y=448, height=51, width=136)
         btnNext.configure(borderwidth=0)
@@ -321,7 +347,7 @@ def Mainmenu():
                 # validar si la contraseña es correcta
                 contraseña = "('"+c2+"',)"
                 if(passw != None):
-                    
+
                     # Lanzar Admin page
                     Client()
                 else:
@@ -349,8 +375,7 @@ def Mainmenu():
                 # validar si la contraseña es correcta
 
                 if(passw != None):
-                    
-                    
+
                     cursor.execute(
                         "SELECT cedula FROM Admin WHERE mail='"+c1+"' AND password='"+c2+"'")
                     cedula = cursor.fetchone()
