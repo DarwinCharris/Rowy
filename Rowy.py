@@ -39,7 +39,8 @@ btnDele = PhotoImage(file="Delete.png")
 imagen2_1 = PhotoImage(file="2_1.png")
 btnnext = PhotoImage(file="next.png")
 imagen2_2 = PhotoImage(file="2_2.png")
-
+imagen2_31 = PhotoImage(file = "2_31.png")
+btndeleteok = PhotoImage(file= "deleteok.png")
 # Objeto cliente y admin
 administrator = cs.admin(None, None, None, None, None)
 # Agregar un objeto cliente con todos sus atributos nulos
@@ -296,7 +297,32 @@ def Mainmenu():
         btnNext.place(x=630, y=448, height=51, width=136)
         btnNext.configure(borderwidth=0)
         print(administrator.lastname)
-
+    def eliminarCliente():
+        for ele in app.winfo_children():
+            ele.destroy()
+        interfaz = Canvas(app)
+        interfaz.pack()
+        background2 = Label(interfaz, image=imagen2_31)
+        background2.pack()
+        
+        #Campos de texto
+        #cedula
+        def validate_cc(text: str):
+            return text.isdecimal()
+        txtCC = Entry(app, bg="grey89", validate="key",
+                      validatecommand=(app.register(validate_cc), "%S"))
+        txtCC.place(x=241, y=244, width=275, height=55)
+        #Contraseña
+        txtcontraseña = Entry(app, bg="grey89", show="*")
+        txtcontraseña.place(x=241, y=379, width=275, height=55)
+        #Boton eliminar
+        def validate_delete():
+            #Falta validad
+            txt1 =txtCC.get()
+            txt2 = txtcontraseña.get()
+            administrator.removeclient(txt1)
+        btnok = Button(image=btndeleteok, command=validate_delete) #Comando de la clase admin
+        btnok.place(x=700, y=448, height=51, width=136)
     # Lanzar la ventana Admin
     def Admin():
         for ele in app.winfo_children():
@@ -315,7 +341,7 @@ def Mainmenu():
         botonMod = Button(image=btnModi)
         botonMod.place(x=23, y=267, height=53, width=168)
         botonMod.configure(borderwidth=0)
-        botonDelete = Button(image=btnDele)
+        botonDelete = Button(image=btnDele, command=eliminarCliente)
         botonDelete.place(x=22, y=355, height=53, width=176)
         botonDelete.configure(borderwidth=0)
 

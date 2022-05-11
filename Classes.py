@@ -1,13 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
-try:
-    conexion = mysql.connector.connect(
-        host='bpacqw5rvjfk010mockm-mysql.services.clever-cloud.com', user='ufmrybtwgkedeaka', password='q0i5Rasr9nIzRK4HN312', db='bpacqw5rvjfk010mockm'
-    )
 
-
-except Error as ex:
-    print("Error de conexión", ex)
 
 
 class plan:
@@ -90,16 +83,35 @@ class admin:
         self.password = password
 
     def addclient(salf, name: str, lastname: str, email: str, password: str, cedula: str, telephone: str, plan: str, cardnumber: str, expdate: str, csv: str):
-
+        try:
+            conexion = mysql.connector.connect(
+            host='bpacqw5rvjfk010mockm-mysql.services.clever-cloud.com', user='ufmrybtwgkedeaka', password='q0i5Rasr9nIzRK4HN312', db='bpacqw5rvjfk010mockm'
+    )
+        except Error as ex:
+            print("Error de conexión", ex)
         cursor = conexion.cursor()
         cursor.execute("INSERT INTO Clientes (cedula,name,lasName, mail,password,plan,telephone,payDate,cardNumber,expDate,cod,licensePlate,NumVIN,dateB,color,brand,origin) VALUES ('" + cedula +
                        "','"+name+"','"+lastname+"','"+email+"','"+password+"','"+plan+"','"+telephone+"','10','"+cardnumber+"','"+expdate+"','"+csv+"','ab4-32','34325A','10-10','red','mazda','colombia')")
         conexion.commit()
-        print("listo")
+        print("Cliente agregado")
+        if conexion.is_connected():
+            conexion.close()
+            
 
-    def removeclient():
-        pass
-
+    def removeclient(self, cc:str):
+        try:
+            conexion = mysql.connector.connect(
+            host='bpacqw5rvjfk010mockm-mysql.services.clever-cloud.com', user='ufmrybtwgkedeaka', password='q0i5Rasr9nIzRK4HN312', db='bpacqw5rvjfk010mockm'
+    )
+        
+        except Error as ex:
+            print("Error de conexión", ex)
+        cursor = conexion.cursor()
+        cursor.execute("DELETE FROM Clientes WHERE cedula='"+cc+"'")
+        conexion.commit()
+        print("reg eliminado")
+        if conexion.is_connected():
+            conexion.close()
     def modclient():
         pass
 
