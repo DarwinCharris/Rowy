@@ -11,7 +11,7 @@ El requerimiento funcional de la actividad es ejecutar el apartado de Login, el 
 4- En el caso de querer volver se ecuentra el botón Back.
 
 11/05/2022
--Se agregó el apartado de eliminar clientes en administradores, la eliminación se hizo mediante una búsqueda dentro de la base de datos para la eliminación del registro.
+-Se agregó el apartado de eliminar clientes en administradores, la eliminación se realiza mediante una búsqueda dentro de la base de datos para la eliminación del registro del cliente.
 Asimismo se resolvió un error que se estaba generando y es que se aplicaban dos botones al mismo tiempo eliminando el registro cuando no se estaba pidiendo.
 
 # Uml Diagram
