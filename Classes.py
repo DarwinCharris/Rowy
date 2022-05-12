@@ -2,7 +2,6 @@ import mysql.connector
 from mysql.connector import Error
 
 
-
 class plan:
     def ver():
         pass
@@ -37,19 +36,19 @@ class plan3(plan):
     pass
 
 
-class client_car(plan):
-    def _init_(self, licenseplate: str, numVIN: str, dateB: str, color: str, brand: str, origin: str):
+class client_car():#Colocar que hereda de plan
+    def __init__(self, licenseplate: str, numVIN: str, dateB: str, color: str, brand: str, origin: str)-> None:
         self.licenseplate = licenseplate
-        self.numVIN =numVIN
+        self.numVIN = numVIN
         self.dateB = dateB
         self.color = color
         self.brand = brand
         self.origin = origin
-        
+    
 
 
 class clientdata(client_car):
-    def __init__(self, cedula: str, name: str, lastname: str, plan: str, telephone: str, paydate: str, cardnumber: str, expdate: str, cod: str, mail: str, password: str):
+    def __init__(self, cedula: str, name: str, lastname: str, plan: str, telephone: str, paydate: str, cardnumber: str, expdate: str, cod: str, mail: str, password: str, licenseplate: str, numVIN: str, dateB: str, color: str, brand: str, origin: str)-> None:
         self.cedula = cedula
         self.name = name
         self.lastname = lastname
@@ -61,7 +60,8 @@ class clientdata(client_car):
         self.cod = cod
         self.mail = mail
         self.password = password
-    
+        # agregar los atributos de clientcar  al init de clientdata y meterlos como parametro de este intit y hacer lo de sef....
+        super().__init__( licenseplate, numVIN, dateB, color, brand, origin)
 
         def carmod():
             pass
@@ -85,8 +85,8 @@ class admin:
     def addclient(salf, name: str, lastname: str, email: str, password: str, cedula: str, telephone: str, plan: str, cardnumber: str, expdate: str, csv: str):
         try:
             conexion = mysql.connector.connect(
-            host='bpacqw5rvjfk010mockm-mysql.services.clever-cloud.com', user='ufmrybtwgkedeaka', password='q0i5Rasr9nIzRK4HN312', db='bpacqw5rvjfk010mockm'
-    )
+                host='bpacqw5rvjfk010mockm-mysql.services.clever-cloud.com', user='ufmrybtwgkedeaka', password='q0i5Rasr9nIzRK4HN312', db='bpacqw5rvjfk010mockm'
+            )
         except Error as ex:
             print("Error de conexión", ex)
         cursor = conexion.cursor()
@@ -96,14 +96,13 @@ class admin:
         print("Cliente agregado")
         if conexion.is_connected():
             conexion.close()
-            
 
-    def removeclient(self, cc:str):
+    def removeclient(self, cc: str):
         try:
             conexion = mysql.connector.connect(
-            host='bpacqw5rvjfk010mockm-mysql.services.clever-cloud.com', user='ufmrybtwgkedeaka', password='q0i5Rasr9nIzRK4HN312', db='bpacqw5rvjfk010mockm'
-    )
-        
+                host='bpacqw5rvjfk010mockm-mysql.services.clever-cloud.com', user='ufmrybtwgkedeaka', password='q0i5Rasr9nIzRK4HN312', db='bpacqw5rvjfk010mockm'
+            )
+
         except Error as ex:
             print("Error de conexión", ex)
         cursor = conexion.cursor()
@@ -112,6 +111,7 @@ class admin:
         print("reg eliminado")
         if conexion.is_connected():
             conexion.close()
+
     def modclient():
         pass
 
