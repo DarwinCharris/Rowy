@@ -41,6 +41,8 @@ btnnext = PhotoImage(file="next.png")
 imagen2_2 = PhotoImage(file="2_2.png")
 imagen2_31 = PhotoImage(file = "2_31.png")
 btndeleteok = PhotoImage(file= "deleteok.png")
+imagen2_22 = PhotoImage(file="2_22.png")
+imagen2_3 = PhotoImage(file ="2_3.png")
 # Objeto cliente y admin
 administrator = cs.admin(None, None, None, None, None)
 # Objeto cliente
@@ -59,6 +61,130 @@ def Mainmenu():
         def agregarClient():
             # Lanzar a la sig pagina
             def add2_2():
+                def add_3():
+                    def next3 ():
+                        def validatedef():
+                            #Limpiar Lables 
+                            ErrorLplate.config(text="")
+                            ErrorVinN.config(text="")
+                            ErrorCdate.config(text="")
+                            ErrorColor.config(text="")
+                            ErrorBrand.config(text="")
+                            #LLaves
+                            keylincese = False
+                            keyVin = False
+                            keyCdate = False
+                            keyColor = False
+                            keyBrand = False
+                            #Comenzar a validar
+                            #Validar lisencia
+                            if(license == ""):
+                                ErrorLplate.config(text="")
+                                ErrorLplate.config(text="Empty field")
+                            else:
+                                keylincese = True
+                            #Validar Num VIN
+                            if(Vin == ""):
+                                ErrorVinN.config(text="")
+                                ErrorVinN.config(text="Empty field")
+                            else:
+                                keyVin = True
+                            #Validar fecha
+                            if(Cdate == ""):
+                                ErrorCdate.config(text="")
+                                ErrorCdate.config(text="Empty field")
+                            else:
+                                if(len(Cdate)!=5):
+                                    ErrorCdate.config(text="")
+                                    ErrorCdate.config(text="Is not a date")
+                                else:
+                                    if search( "-" , Cdate):
+                                        keyCdate = True
+                                    else:
+                                        ErrorCdate.config(text="")
+                                        ErrorCdate.config(text="Date should have -")
+                            #Validar color
+                            if(color == ""):
+                                ErrorColor.config(text="")
+                                ErrorColor.config(text="Empty field")
+                            else:
+                                keyColor = True
+                            #Validar marca
+                            if(brand == ""):
+                                ErrorBrand.config(text="")
+                                ErrorBrand.config(text="Empty field")
+                            else:
+                                keyBrand = True
+                            #Si todo está bien guardar datos y agregar
+                            if(keylincese == True and keyVin == True and keyCdate == True and keyColor == True 
+                                    and keyBrand == True):
+                                client.licenseplate = license
+                                client.numVIN = Vin
+                                client.dateB = Cdate
+                                client.color = color
+                                client.brand = brand
+                                #Metodo agregar cliente 
+                                administrator.addclient(client.name, client.lastname, client.mail, client.password,
+                                    client.cedula, client.telephone, client.plan, client.cardnumber, client.expdate, 
+                                    client.cod,client.licenseplate, client.numVIN, client.dateB, client.color, client.brand)
+                                Admin()
+
+                        license = txtLplate.get()
+                        Vin = txtVinN.get()
+                        Cdate = txtCdate.get()
+                        color = txtColor.get()
+                        brand = txtBrand.get()
+                        validatedef()
+                    for ele in app.winfo_children():
+                        ele.destroy()
+                    interfaz = Canvas(app)
+                    interfaz.pack()
+                    background2_2 = Label(interfaz, image=imagen2_3)
+                    background2_2.pack()
+                    #Campos de text
+                    def validate_cc(text: str):
+                        return text.isdecimal()
+                    txtLplate = Entry(app, bg="grey89")
+                    txtLplate.place(x=245, y=220, width=275, height=55)
+                    txtVinN = Entry(app, bg="grey89")
+                    txtVinN.place(x=557, y=220, width=275, height=55)
+                    txtCdate = Entry(app, bg="grey89")
+                    txtCdate.place(x=245, y=339, width=275, height=55)
+                    txtColor = Entry(app, bg="grey89")
+                    txtColor.place(x=557, y=339, width=275, height=55)
+                    txtBrand = Entry(app, bg="grey89")
+                    txtBrand.place(x=245, y=448, width=275, height=55)
+                    #Botones laterales
+                    botonMod = Button(image=btnModi, command=modificarCliente)
+                    botonMod.place(x=23, y=267, height=53, width=168)
+                    botonMod.configure(borderwidth=0)
+                    botonDelete = Button(image=btnDele, command=eliminarCliente)
+                    botonDelete.place(x=22, y=355, height=53, width=176)
+                    botonDelete.configure(borderwidth=0)
+                    botonBack1 = Button(text="Back", image=botonBack, command=add2_2)
+                    botonBack1.place(x=46, y=450, height=50, width=105)
+                    botonBack1.configure(height=2,
+                                        width=12, borderwidth=0)
+                    #Label para errores
+                    ErrorLplate = Label(app, text="", font=20,
+                                    fg="#E41111", bg="#FAFBFD")
+                    ErrorLplate.place(x=245, y=276)
+                    ErrorVinN = Label(app, text="", font=20,
+                                    fg="#E41111", bg="#FAFBFD")
+                    ErrorVinN.place(x=557, y=276)
+                    ErrorCdate = Label(app, text="", font=20,
+                                        fg="#E41111", bg="#FAFBFD")
+                    ErrorCdate.place(x=245, y=400)
+                    ErrorColor = Label(app, text="", font=20,
+                                    fg="#E41111", bg="#FAFBFD")
+                    ErrorColor.place(x=557, y=400)
+                    ErrorBrand = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+                    ErrorBrand.place(x=245, y=505)
+                    #Boton ok
+                    btnOK = Button(image=btnnext, command=next3)
+                    btnOK.place(x=630, y=448, height=51, width=136)
+                    btnOK.configure(borderwidth=0)
+
                 def next2():
                     def validate():
                         ErrorPhone.config(text="")
@@ -113,11 +239,16 @@ def Mainmenu():
                             ErrorEdate.config(text="")
                             ErrorEdate.config(text="Emprty field")
                         else:
-                            if(len(edate)!= 4):
+                            if(len(edate)!= 5):
                                 ErrorEdate.config(text="")
                                 ErrorEdate.config(text="Incorrect value")
                             else:
-                                keyEdate = True
+                                if search( "-", edate):
+                                    keyEdate = True
+                                else:
+                                    ErrorEdate.config(text="")
+                                    ErrorEdate.config(text="Date should have -")
+                                
                         #Validar csv
                         if(csv == ""):
                             ErrorCSV.config(text="")
@@ -135,11 +266,12 @@ def Mainmenu():
                             client.cardnumber = cnumber
                             client.expdate = edate
                             client.cod = csv
-                            administrator.addclient(client.name, client.lastname, client.mail, client.password, client.cedula,
-                                            client.telephone, client.plan, client.cardnumber, client.expdate, client.cod)
-                            Admin()
-                        else:
-                            print("wtf")
+                            #Lanzar la sig interfaz
+                            add_3()
+                            #administrator.addclient(client.name, client.lastname, client.mail, client.password, client.cedula,
+                             #               client.telephone, client.plan, client.cardnumber, client.expdate, client.cod)
+                            #Admin()
+                        
                    
 
                     phone = txtphone.get()
@@ -169,14 +301,13 @@ def Mainmenu():
                 txtCnumber = Entry(app, bg="grey89",validate="key",
                                  validatecommand=(app.register(validate_cc), "%S"))
                 txtCnumber.place(x=245, y=339, width=275, height=55)
-                txtEdate = Entry(app, bg="grey89",validate="key",
-                                 validatecommand=(app.register(validate_cc), "%S"))
+                txtEdate = Entry(app, bg="grey89")
                 txtEdate.place(x=557, y=339, width=275, height=55)
                 txtCSV = Entry(app, bg="grey89", validate="key", validatecommand=(
                     app.register(validate_cc), "%S"), show="*")
                 txtCSV.place(x=245, y=448, width=275, height=55)
                 # Boton next2
-                # agregar metodo de validaciones
+                
                 btnNext2 = Button(image=btnnext, command=next2)
                 btnNext2.place(x=630, y=448, height=51, width=136)
                 btnNext2.configure(borderwidth=0)
@@ -195,6 +326,17 @@ def Mainmenu():
                 ErrorEdate.place(x=557, y=400)
                 ErrorCSV = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
                 ErrorCSV.place(x=245, y=505)
+                #Botones laterales
+                botonMod = Button(image=btnModi, command=modificarCliente)
+                botonMod.place(x=23, y=267, height=53, width=168)
+                botonMod.configure(borderwidth=0)
+                botonDelete = Button(image=btnDele, command=eliminarCliente)
+                botonDelete.place(x=22, y=355, height=53, width=176)
+                botonDelete.configure(borderwidth=0)
+                botonBack1 = Button(text="Back", image=botonBack, command=agregarClient)
+                botonBack1.place(x=46, y=450, height=50, width=105)
+                botonBack1.configure(height=2,
+                                    width=12, borderwidth=0)
             # Metodo del boton next
 
             def next1():
@@ -302,7 +444,7 @@ def Mainmenu():
             background2_1 = Label(interfaz, image=imagen2_1)
             background2_1.pack()
             # botones del panel lateral
-            botonMod = Button(image=btnModi)
+            botonMod = Button(image=btnModi, command=modificarCliente)
             botonMod.place(x=23, y=267, height=53, width=168)
             botonMod.configure(borderwidth=0)
             botonDelete = Button(image=btnDele, command=eliminarCliente)
@@ -311,7 +453,7 @@ def Mainmenu():
             botonBack1 = Button(text="Back", image=botonBack, command=Admin)
             botonBack1.place(x=46, y=450, height=50, width=105)
             botonBack1.configure(height=2,
-                                width=12)
+                                width=12, borderwidth=0)
             # Campos de texto
             txtname = Entry(app, bg="grey89")
             txtname.place(x=245, y=220, width=275, height=55)
@@ -413,19 +555,31 @@ def Mainmenu():
             botonBack1 = Button(text="Back", image=botonBack, command=Admin)
             botonBack1.place(x=46, y=450, height=50, width=105)
             botonBack1.configure(height=2,
-                                width=12)
+                                width=12, borderwidth=0)
             #botones del panel lateral
             botonAdd = Button(image=botonAdd1, command=agregarClient)
             botonAdd.place(x=20, y=191, height=54, width=181)
             botonAdd.configure(borderwidth=0)
-            botonMod = Button(image=btnModi)
+            botonMod = Button(image=btnModi, command=modificarCliente)
             botonMod.place(x=23, y=267, height=53, width=168)
             botonMod.configure(borderwidth=0)
             #Label de error
-            ErrorCC = Label(app, text="aaa", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorCC = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
             ErrorCC.place(x=241, y=300)
-            ErrorPP = Label(app, text="aaa", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorPP = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
             ErrorPP.place(x=241, y=436)
+        def modificarCliente():
+            for ele in app.winfo_children():
+                ele.destroy()
+            interfaz = Canvas(app)
+            interfaz.pack()
+            background2 = Label(interfaz, image=imagen2_22)
+            background2.pack()
+            #Boton back
+            botonBack1 = Button(text="Back", image=botonBack, command=Admin)
+            botonBack1.place(x=46, y=450, height=50, width=105)
+            botonBack1.configure(height=2,
+                                width=12, borderwidth=0)
         for ele in app.winfo_children():
             ele.destroy()
         interfaz = Canvas(app)
@@ -439,7 +593,7 @@ def Mainmenu():
         botonAdd = Button(image=botonAdd1, command=agregarClient)
         botonAdd.place(x=20, y=191, height=54, width=181)
         botonAdd.configure(borderwidth=0)
-        botonMod = Button(image=btnModi)
+        botonMod = Button(image=btnModi, command=modificarCliente)
         botonMod.place(x=23, y=267, height=53, width=168)
         botonMod.configure(borderwidth=0)
         botonDelete = Button(image=btnDele, command=eliminarCliente)
