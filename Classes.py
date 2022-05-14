@@ -36,7 +36,7 @@ class plan3(plan):
     pass
 
 
-class client_car():#Colocar que hereda de plan
+class client_car(plan):#Colocar que hereda de plan
     def __init__(self, licenseplate: str, numVIN: str, dateB: str, color: str, brand: str, origin: str)-> None:
         self.licenseplate = licenseplate
         self.numVIN = numVIN
@@ -44,6 +44,7 @@ class client_car():#Colocar que hereda de plan
         self.color = color
         self.brand = brand
         self.origin = origin
+        super().__init__()
     
 
 

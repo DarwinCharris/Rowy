@@ -89,20 +89,17 @@ def Mainmenu():
                                 ErrorVinN.config(text="Empty field")
                             else:
                                 keyVin = True
-                            #Validar fecha
+                            #Validar monto de dinero
                             if(Cdate == ""):
                                 ErrorCdate.config(text="")
                                 ErrorCdate.config(text="Empty field")
                             else:
-                                if(len(Cdate)!=5):
+                                monto = int(Cdate)
+                                if(monto<10000):
                                     ErrorCdate.config(text="")
-                                    ErrorCdate.config(text="Is not a date")
+                                    ErrorCdate.config(text="Isn't sufficient money")
                                 else:
-                                    if search( "-" , Cdate):
-                                        keyCdate = True
-                                    else:
-                                        ErrorCdate.config(text="")
-                                        ErrorCdate.config(text="Date should have -")
+                                    keyCdate = True
                             #Validar color
                             if(color == ""):
                                 ErrorColor.config(text="")
@@ -614,6 +611,34 @@ def Mainmenu():
     def login():
         # Validar cliente
         def validarClient(c1: Str, c2: Str):
+            def instanciar ():
+                #Nombre
+                cursor.execute("SELECT name FROM Clientes WHERE mail='"+c1+"'")
+                client.name = cursor.fetchone()
+                #Apellido
+                cursor.execute("SELECT lasName FROM Clientes WHERE mail='"+c1+"'")
+                client.lastname = cursor.fetchone()
+                #Plan
+                cursor.execute("SELECT plan FROM Clientes WHERE mail='"+c1+"'")
+                client.plan = cursor.fetchone()
+                #telefono
+                cursor.execute("SELECT telephone FROM Clientes WHERE mail='"+c1+"'")
+                client.telephone = cursor.fetchone()
+                #Placa
+                cursor.execute("SELECT licensePlate FROM Clientes WHERE mail='"+c1+"'")
+                client.licenseplate = cursor.fetchone()
+                #numero VIn
+                cursor.execute("SELECT numVIN FROM Clientes WHERE mail='"+c1+"'")
+                client.numVIN = cursor.fetchone()
+                #Fecha/modelo
+                cursor.execute("SELECT dateB FROM Clientes WHERE mail='"+c1+"'")
+                client.dateB = cursor.fetchone()
+                #Color
+                cursor.execute("SELECT color FROM Clientes WHERE mail='"+c1+"'")
+                client.color = cursor.fetchone()
+                #Marca
+                cursor.execute("SELECT brand FROM Clientes WHERE mail='"+c1+"'")
+                client.brand = cursor.fetchone()
             # Conseguir el email en la base de datos
             cursor = conexion.cursor()
             cursor.execute("SELECT mail FROM Clientes WHERE mail='"+c1+"'")
@@ -628,9 +653,11 @@ def Mainmenu():
                 # validar si la contraseña es correcta
                 contraseña = "('"+c2+"',)"
                 if(passw != None):
-
+                    #Instanciar obj cliente
+                    instanciar()
                     # Lanzar Admin page
                     Client()
+                    
                 else:
                     Error.config(text="")
                     Error.config(text="Invalid password")
