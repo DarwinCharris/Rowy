@@ -4,7 +4,7 @@ from cgitb import text
 from queue import Empty
 from tkinter import *  # seleccionar lo que necesitamos
 from tkinter.font import Font
-from msilib.schema import Error
+from msilib.schema import CheckBox, Error
 import mysql.connector
 from mysql.connector import Error
 from re import search
@@ -49,6 +49,7 @@ administrator = cs.admin(None, None, None, None, None)
 # Objeto cliente
 client = cs.clientdata(None, None, None, None, None,
                        None, None, None, None, None, None, None, None, None, None, None, None)
+
 
 
 # Pagína principal
@@ -593,15 +594,44 @@ def Mainmenu():
         botonDelete.configure(borderwidth=0)
 
     def Client():
-        for ele in app.winfo_children():
-            ele.destroy()
-        interfaz = Canvas(app)
-        interfaz.pack()
-        background3 = Label(interfaz, image=imagen3)
+        
+        background3 = Label(app, image=imagen3)
         background3.pack()
         botonBack2 = Button(text="Back", image=botonBack, command=Mainmenu)
         botonBack2.place(x=813, y=420, height=41, width=105)
         botonBack2.config(borderwidth=0)
+        
+        def a():
+            sot = 0
+            
+            tec= 0
+            tx = 0
+            if(varSoat.get() == 1):
+                sot = 1000000
+            if(varTech.get()==1):
+                tec = 220000
+            if(varTax.get()==1):
+                tx = 500000
+            sum = sot+tec+tx
+            out= str(sum)
+            total.config(text="$"+out)
+            
+            
+        total = Label(app, text="$0")
+        total.place(x= 662, y=192)
+        varSoat = IntVar()
+        varTech = IntVar()
+        varTax = IntVar()
+       
+        action = Checkbutton(app,text="$1.000.000", variable=varSoat, onvalue=1, offvalue=0, command=a)
+        action.place(x=447, y=180)
+        tech = Checkbutton(app, text="$220.000",variable=varTech, onvalue=1, offvalue=0, command=a)
+        tech.place(x=447, y= 241)
+        tax = Checkbutton(app, text="$500.000", variable=varTax, onvalue=1, offvalue=0, command=a)
+        tax.place(x=447, y = 306)
+        
+        
+
 
     # Comando boton Login
     def login():
