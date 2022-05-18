@@ -43,6 +43,7 @@ imagen2_31 = PhotoImage(file = "2_31.png")
 btndeleteok = PhotoImage(file= "deleteok.png")
 imagen2_22 = PhotoImage(file="2_22.png")
 imagen2_3 = PhotoImage(file ="2_3.png")
+
 # Objeto cliente y admin
 administrator = cs.admin(None, None, None, None, None)
 # Objeto cliente
@@ -159,9 +160,8 @@ def Mainmenu():
                     botonDelete.place(x=22, y=355, height=53, width=176)
                     botonDelete.configure(borderwidth=0)
                     botonBack1 = Button(text="Back", image=botonBack, command=add2_2)
-                    botonBack1.place(x=46, y=450, height=50, width=105)
-                    botonBack1.configure(height=2,
-                                        width=12, borderwidth=0)
+                    botonBack1.place(x=46, y=450, height=41, width=105)
+                    botonBack1.configure( borderwidth=0)
                     #Label para errores
                     ErrorLplate = Label(app, text="", font=20,
                                     fg="#E41111", bg="#FAFBFD")
@@ -179,7 +179,7 @@ def Mainmenu():
                     ErrorBrand.place(x=245, y=505)
                     #Boton ok
                     btnOK = Button(image=btnnext, command=next3)
-                    btnOK.place(x=630, y=448, height=51, width=136)
+                    btnOK.place(x=630, y=448, height=41, width=105)
                     btnOK.configure(borderwidth=0)
 
                 def next2():
@@ -306,7 +306,7 @@ def Mainmenu():
                 # Boton next2
                 
                 btnNext2 = Button(image=btnnext, command=next2)
-                btnNext2.place(x=630, y=448, height=51, width=136)
+                btnNext2.place(x=630, y=448, height=41, width=105)
                 btnNext2.configure(borderwidth=0)
                 # Label error
                 ErrorPhone = Label(app, text="", font=20,
@@ -331,9 +331,8 @@ def Mainmenu():
                 botonDelete.place(x=22, y=355, height=53, width=176)
                 botonDelete.configure(borderwidth=0)
                 botonBack1 = Button(text="Back", image=botonBack, command=agregarClient)
-                botonBack1.place(x=46, y=450, height=50, width=105)
-                botonBack1.configure(height=2,
-                                    width=12, borderwidth=0)
+                botonBack1.place(x=46, y=450, height=41, width=105)
+                botonBack1.configure( borderwidth=0)
             # Metodo del boton next
 
             def next1():
@@ -448,9 +447,8 @@ def Mainmenu():
             botonDelete.place(x=22, y=355, height=53, width=176)
             botonDelete.configure(borderwidth=0)
             botonBack1 = Button(text="Back", image=botonBack, command=Admin)
-            botonBack1.place(x=46, y=450, height=50, width=105)
-            botonBack1.configure(height=2,
-                                width=12, borderwidth=0)
+            botonBack1.place(x=46, y=450, height=41, width=105)
+            botonBack1.configure( borderwidth=0)
             # Campos de texto
             txtname = Entry(app, bg="grey89")
             txtname.place(x=245, y=220, width=275, height=55)
@@ -486,7 +484,7 @@ def Mainmenu():
             ErrorID.place(x=245, y=505)
             # Botón next
             btnNext = Button(image=btnnext, command=next1)
-            btnNext.place(x=630, y=448, height=51, width=136)
+            btnNext.place(x=630, y=448, height=41, width=105)
             btnNext.configure(borderwidth=0)
             
         def eliminarCliente():
@@ -550,9 +548,8 @@ def Mainmenu():
             btnok.configure(borderwidth=0)
             #Botón para regresar
             botonBack1 = Button(text="Back", image=botonBack, command=Admin)
-            botonBack1.place(x=46, y=450, height=50, width=105)
-            botonBack1.configure(height=2,
-                                width=12, borderwidth=0)
+            botonBack1.place(x=46, y=450, height=41, width=105)
+            botonBack1.configure( borderwidth=0)
             #botones del panel lateral
             botonAdd = Button(image=botonAdd1, command=agregarClient)
             botonAdd.place(x=20, y=191, height=54, width=181)
@@ -574,9 +571,8 @@ def Mainmenu():
             background2.pack()
             #Boton back
             botonBack1 = Button(text="Back", image=botonBack, command=Admin)
-            botonBack1.place(x=46, y=450, height=50, width=105)
-            botonBack1.configure(height=2,
-                                width=12, borderwidth=0)
+            botonBack1.place(x=46, y=450, height=41, width=105)
+            botonBack1.configure(borderwidth=0)
         for ele in app.winfo_children():
             ele.destroy()
         interfaz = Canvas(app)
@@ -584,9 +580,8 @@ def Mainmenu():
         background2 = Label(interfaz, image=imagen2)
         background2.pack()
         botonBack1 = Button(text="Back", image=botonBack, command=Mainmenu)
-        botonBack1.place(x=46, y=450, height=50, width=105)
-        botonBack1.configure(height=2,
-                            width=12)
+        botonBack1.place(x=46, y=450, height=41, width=105)
+        botonBack1.configure(borderwidth=0)
         botonAdd = Button(image=botonAdd1, command=agregarClient)
         botonAdd.place(x=20, y=191, height=54, width=181)
         botonAdd.configure(borderwidth=0)
@@ -605,7 +600,8 @@ def Mainmenu():
         background3 = Label(interfaz, image=imagen3)
         background3.pack()
         botonBack2 = Button(text="Back", image=botonBack, command=Mainmenu)
-        botonBack2.place(x=813, y=420, height=50, width=105)
+        botonBack2.place(x=813, y=420, height=41, width=105)
+        botonBack2.config(borderwidth=0)
 
     # Comando boton Login
     def login():
@@ -732,10 +728,9 @@ def Mainmenu():
 
     # Boton login
     boton = Button(image=botonLogin, command=login)
-    boton.place(x=813, y=420, height=58, width=105)
+    boton.place(x=813, y=420, height=41, width=105)
 
-    boton.configure(height=2,
-                    width=12)
+    boton.configure( borderwidth=0)
 
     # Campos de texto
     txt1 = Entry(app, bg="grey89")
