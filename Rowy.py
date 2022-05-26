@@ -26,7 +26,6 @@ app.title("Rowy")
 app.geometry("960x540")
 app.resizable(height=False, width=False)
 
-
 # Fondos
 imagen = PhotoImage(file="imagenes/1.png")
 imagen2 = PhotoImage(file="imagenes/2.png")
@@ -579,6 +578,76 @@ def Mainmenu():
             ErrorPP = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
             ErrorPP.place(x=241, y=436)
         def modificarCliente():
+            def Change():
+                #Obetener los campos de texto
+                cedula =txtCedula.get()
+                plan =txtPlan.get()
+                mail =txtmail.get()
+                #labels de error
+                ErrorPlan.config(text="")
+                ErrorCedula.config(text="")
+                ErrorMail.config(text="")
+                #Llaves
+                keyced = False
+                keymail = False
+                keyPlan = False
+                #Validar la cedula 
+                if(cedula == ""):
+                    #Campos vacios
+                    ErrorCedula.config(text="")
+                    ErrorCedula.config(text="Empty field")
+                else:
+                    #Validar que la cedula exista en la db
+                    cursor = conexion.cursor()
+                    # Ver si esto funciona pq ced es numero
+                    cursor.execute(
+                        "SELECT cedula FROM Clientes WHERE cedula='"+cedula+"'")
+                    ced = cursor.fetchone()
+                    if(ced == None):
+                        #No existe el cliente
+                        ErrorCedula.config(text="")
+                        ErrorCedula.config(text="Is not a client")
+                    else:
+                        keyced = True
+                        
+                if(keyced ==True):
+                    if(plan !=""):
+                        #Si va a  digitar algo en plan hay que validar
+                        if(plan == "1" or plan=="2" or plan == "3"):
+                            #Ver si es uno de los planes
+                            keyPlan=True
+                            pass
+                        else:
+                            ErrorPlan.config(text="")
+                            ErrorPlan.config(text="Is not a plan")
+                    else:
+                        keyPlan = True
+                    if(mail != ""):
+                        #Si va a cambiar el mail validar
+                        if search("@rowy.com", mail):
+                            ErrorMail.config(text="")
+                            ErrorMail.config(text="Mail not available")
+                        # Comprobar si el email está ocupado
+                        else:
+                            cursor = conexion.cursor()
+                            cursor.execute(
+                                "SELECT mail FROM Clientes WHERE mail='"+mail+"'")
+                            email = cursor.fetchone()
+                            if(email != None):
+                                ErrorMail.config(text="")
+                                ErrorMail.config(text="Mail not available")
+                            else:
+                                # comprobar si tiene alguno de los dominios validos
+                                if(search("@gmail.com", mail) or search("@hotmail.com", mail) or search("@outlook.com", mail) or search("@yahoo.com", mail)):
+                                    keymail = True
+                                else:
+                                    ErrorMail.config(text="")
+                                    ErrorMail.config(text="Mail not available")
+                    else:
+                        keymail=True
+                if(keyced == True and keyPlan == True and keymail ==True):
+                    administrator.modclient(cedula, plan, mail)   
+                    Admin()
             #interfaz modificar cliente
             for ele in app.winfo_children():
                 ele.destroy()
@@ -608,16 +677,21 @@ def Mainmenu():
             txtPlan = Entry(app, bg="grey89", validate="key",
                         validatecommand=(app.register(validate_cc), "%S"),font=30)
             txtPlan.place(x=241, y=244, width=275, height=55)
+            txtCedula = Entry(app, bg="grey89", validate="key",
+                        validatecommand=(app.register(validate_cc), "%S"),font=30)
+            txtCedula.place(x=563, y=244, width=275, height=55)
             #Contraseña
             txtmail = Entry(app, bg="grey89",font=30)
             txtmail.place(x=241, y=379, width=275, height=55)
             #Label de error
             ErrorPlan = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
             ErrorPlan.place(x=241, y=300)
+            ErrorCedula = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorCedula.place(x=563, y=300)
             ErrorMail = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
             ErrorMail.place(x=241, y=436)
             #Boton para hacer cambios
-            btnok = Button(image=btnChange) #Comando de la clase admin
+            btnok = Button(image=btnChange, command=Change) #Comando de la clase admin
             btnok.place(x=700, y=448, height=41, width=111)
             btnok.configure(borderwidth=0)
         #Pagina principal de administradores

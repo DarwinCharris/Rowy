@@ -226,7 +226,7 @@ class Admin():
         if conexion.is_connected():
             conexion.close()
 
-    def modclient(self, cedula:int, plan: int, email: str):
+    def modclient(self, cedula:str, plan: str, email: str):
         #conectar a la base de datos
         try:
             conexion = mysql.connector.connect(
@@ -234,12 +234,22 @@ class Admin():
             )
         except Error as ex:
             print("Error de conexión", ex)
-            #ejecutar comando
-        cursor = conexion.cursor()
-        # modificar cliente
-        cursor.execute("UPDATE Clientes WHERE cedula ='"+email+"'")
-        #resultado a la base de datos
-        conexion.commit()
-        # Cerrar
+        if(plan!=""):
+            # Cursor para ejecutar comando
+            cursor = conexion.cursor()
+            # Modificar el dinero del cliente en la base de datos
+            cursor.execute("UPDATE Clientes SET plan ='" +
+                        plan+"' WHERE cedula='"+cedula+"'")
+            # Enviar el resultado a la base de datos
+            conexion.commit()
+        if(email!=""):
+            # Cursor para ejecutar comando
+            cursor = conexion.cursor()
+            # Modificar el dinero del cliente en la base de datos
+            cursor.execute("UPDATE Clientes SET mail ='" +
+                        email+"' WHERE cedula='"+cedula+"'")
+            # Enviar el resultado a la base de datos
+            conexion.commit()
+        # Cerrar la base de datos
         if conexion.is_connected():
             conexion.close()
