@@ -1,6 +1,7 @@
 
 from ast import Str
 from cgitb import text
+from multiprocessing.spawn import old_main_modules
 from queue import Empty
 from tkinter import *  # seleccionar lo que necesitamos
 from tkinter.font import Font
@@ -40,6 +41,7 @@ imagen3_addMoney = PhotoImage(file="imagenes/3_pay.png")
 imagenmaint = PhotoImage(file="imagenes/mechanic.png")
 imagenComplaint = PhotoImage(file="imagenes/complaint.png")
 imagen3_Config = PhotoImage(file="imagenes/3_Config.png")
+imagen3_Modicar = PhotoImage(file="imagenes/3_modicar.png")
 #Botones
 botonLogin = PhotoImage(file="imagenes/boton.png")
 botonBack = PhotoImage(file="imagenes/back.png")
@@ -58,6 +60,8 @@ btnCar = PhotoImage(file="imagenes/car.png")
 btnPays = PhotoImage(file="imagenes/pays.png")
 btnChangeP = PhotoImage(file="imagenes/ChangePw.png")
 btnChangeT = PhotoImage(file="imagenes/ChangeTele.png")
+btnChangeCar = PhotoImage(file = "imagenes/ChangeCar.png")
+btnChange = PhotoImage(file="imagenes/btnChange.png")
 # Objeto cliente y admin
 administrator = cs.Admin(None, None, None, None, None)
 # Objeto cliente
@@ -65,7 +69,15 @@ client = cs.Clientdata(None, None, None, None, None,
                        None, None, None, None, None, None, None, None, None, None, None, None)
 
 # Pagína principal
-def Mainmenu():    
+def Mainmenu(): 
+    # Conectar a la base de datos
+    try:
+        conexion = mysql.connector.connect(
+            host='bpacqw5rvjfk010mockm-mysql.services.clever-cloud.com', user='ufmrybtwgkedeaka', password='q0i5Rasr9nIzRK4HN312', db='bpacqw5rvjfk010mockm'
+        )
+    except Error as ex:
+        print("Error de conexión", ex)
+    # ventana principal   
     # Lanzar la ventana Admin
     def Admin():
         def agregarClient():
@@ -547,10 +559,8 @@ def Mainmenu():
             txtcontraseña = Entry(app, bg="grey89", show="*",font=30)
             txtcontraseña.place(x=241, y=379, width=275, height=55)
             #Boton eliminar
-            
-            #Botón para avanzar
             btnok = Button(image=btndeleteok, command=validate_delete) #Comando de la clase admin
-            btnok.place(x=700, y=448, height=51, width=136)
+            btnok.place(x=700, y=448, height=41, width=105)
             btnok.configure(borderwidth=0)
             #Botón para regresar
             botonBack1 = Button(text="Back", image=botonBack, command=Admin)
@@ -581,6 +591,35 @@ def Mainmenu():
             botonBack1 = Button(text="Back", image=botonBack, command=Admin)
             botonBack1.place(x=46, y=450, height=41, width=105)
             botonBack1.configure(borderwidth=0)
+            #Botones laterales
+            #Agregar cliente
+            botonAdd = Button(image=botonAdd1, command=agregarClient)
+            botonAdd.place(x=20, y=191, height=54, width=181)
+            botonAdd.configure(borderwidth=0)
+            #Eliminar cliente
+            botonDelete = Button(image=btnDele, command=eliminarCliente)
+            botonDelete.place(x=22, y=355, height=53, width=176)
+            botonDelete.configure(borderwidth=0)
+            #Campos de texto
+            #cedula
+            #Bloquear caracteres diferentes a los numeros
+            def validate_cc(text: str):
+                return text.isdecimal()
+            txtPlan = Entry(app, bg="grey89", validate="key",
+                        validatecommand=(app.register(validate_cc), "%S"),font=30)
+            txtPlan.place(x=241, y=244, width=275, height=55)
+            #Contraseña
+            txtmail = Entry(app, bg="grey89",font=30)
+            txtmail.place(x=241, y=379, width=275, height=55)
+            #Label de error
+            ErrorPlan = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorPlan.place(x=241, y=300)
+            ErrorMail = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorMail.place(x=241, y=436)
+            #Boton para hacer cambios
+            btnok = Button(image=btnChange) #Comando de la clase admin
+            btnok.place(x=700, y=448, height=41, width=111)
+            btnok.configure(borderwidth=0)
         #Pagina principal de administradores
         for ele in app.winfo_children():
             ele.destroy()
@@ -606,9 +645,73 @@ def Mainmenu():
         botonDelete = Button(image=btnDele, command=eliminarCliente)
         botonDelete.place(x=22, y=355, height=53, width=176)
         botonDelete.configure(borderwidth=0)
+        
 
     def Client():
         def configure():
+            def modPassword():
+                ErrorNP.config(text="")
+                ErrorCP.config(text="")
+                ErrorOP.config(text="")
+                new = txtNpassword.get()
+                old = txtOldP.get()
+                confirm =txtConfirmP.get()
+                key1= False
+                key2= False
+                key3 = False
+                #Validar nueva contraseña
+                if(new == ""):
+                    ErrorNP.config(text="")
+                    ErrorNP.config(text="Empty field")
+                else:
+                    key1 = True
+                #Validar confirmar
+                if(confirm == ""):
+                    ErrorCP.config(text="")
+                    ErrorCP.config(text="Empty field")
+                else:
+                    if(new == confirm):
+                        key2 = True
+                    else:
+                        ErrorCP.config(text="")
+                        ErrorCP.config(text="Is not the same Password")
+                #Validar contraseña vieja
+                if(old == ""):
+                    ErrorOP.config(text="")
+                    ErrorOP.config(text="Empty field")
+                else:
+                    #Descomponer la cedula porque el string tiene ('...',)
+                    fin = len(client.cedula)-4
+                    sub = str(client.cedula)
+                    ced = sub[2:fin]
+                    cursor =conexion.cursor()
+                    #Comando para buscar la contraseña en su cedula
+                    cursor.execute("SELECT password FROM Clientes WHERE cedula='"+ced+"'")
+                    comprobar = cursor.fetchone()
+                    if(search(old, str(comprobar))):
+                        key3 =True
+                    else:
+                        ErrorOP.config(text="")
+                        ErrorOP.config(text="Incorrect password")
+                #Si todo está bien actualizar la contraseña
+                if(key1 == True and key2==True and key3 ==True):
+                    client.modPassword(ced, new)
+                    Client()
+            def modPhone():
+                ErrorTel.config(text="")
+                tel = txtNtelephone.get()
+                if(tel == ""):
+                    ErrorTel.config(text="")
+                    ErrorTel.config(text="Empty field")
+                else:
+                    if(len(tel)==10):
+                        fin = len(client.cedula)-4
+                        sub = str(client.cedula)
+                        ced = sub[2:fin]
+                        client.modnum(ced, tel)
+                    else:
+                        ErrorTel.config(text="")
+                        ErrorTel.config(text="Incorrect value")
             #Pagina de configuración
             for ele in app.winfo_children():
                 ele.destroy()
@@ -625,10 +728,10 @@ def Mainmenu():
             btncar = Button(app, image=btnPays, borderwidth=0, command=Client)
             btncar.place(x=0, y = 179, height=56, width=222)
             #Boton de modificar contraseña
-            btnCPassword = Button(app, image= btnChangeP, borderwidth=0)
+            btnCPassword = Button(app, image= btnChangeP, borderwidth=0, command=modPassword)
             btnCPassword.place(x=237, y=465, height=42, width=111)
             #Boton de modificar telefono
-            btnCTelephone = Button(app, image=btnChangeT, borderwidth=0)
+            btnCTelephone = Button(app, image=btnChangeT, borderwidth=0, command=modPhone)
             btnCTelephone.place(x=773, y=379, height=41, width=111)
             #Campos de texto
             #nueva contraseña
@@ -646,16 +749,109 @@ def Mainmenu():
             txtNtelephone = Entry(app, bg="grey89",font=30, validate="key",
                         validatecommand=(app.register(validate_cc), "%S"))
             txtNtelephone.place(x=609, y=223, width=275, height=55)
-            #Telefono antiguo
-            txtOldtele = Entry(app, bg="grey89",font=30, validate="key",
-                        validatecommand=(app.register(validate_cc), "%S"))
-            txtOldtele.place(x=609, y=310, width=275, height=55)
+            #Laber Errores
+            #Error new password
+            ErrorNP = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorNP.place(x=394, y=195)
+            #Error Confirm password
+            ErrorCP = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorCP.place(x=424, y=283)
+            #Error Old Password
+            ErrorOP = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorOP.place(x=380, y=369)
+            #Error telephone
+            ErrorTel = Label(app, text="", font=20, fg="#E41111", bg="#FAFBFD")
+            ErrorTel.place(x=765, y=195)
         def Car():
+            def modify():
+                #Limpiar Lables 
+                ErrorLplate.config(text="")
+                ErrorVinN.config(text="")
+                ErrorColor.config(text="")
+                ErrorBrand.config(text="")
+                #Tomar la información
+                license = txtLplate.get()
+                Vin = txtVinN.get()
+                color = txtColor.get()
+                brand = txtBrand.get()
+                #LLaves
+                keylincese = False
+                keyVin = False
+                keyColor = False
+                keyBrand = False
+                #Comenzar a validar
+                #Validar lisencia
+                if(license == ""):
+                    ErrorLplate.config(text="")
+                    ErrorLplate.config(text="Empty field")
+                else:
+                    keylincese = True
+                #Validar Num VIN
+                if(Vin == ""):
+                    ErrorVinN.config(text="")
+                    ErrorVinN.config(text="Empty field")
+                else:
+                    keyVin = True
+                #Validar color
+                if(color == ""):
+                    ErrorColor.config(text="")
+                    ErrorColor.config(text="Empty field")
+                else:
+                    keyColor = True
+                #Validar marca
+                if(brand == ""):
+                    ErrorBrand.config(text="")
+                    ErrorBrand.config(text="Empty field")
+                else:
+                    keyBrand = True
+                if(keylincese == True and keyVin == True and keyColor == True 
+                                    and keyBrand == True):
+                     #Descomponer la cedula porque el string tiene ('...',)
+                    fin = len(client.cedula)-4
+                    sub = str(client.cedula)
+                    ced = sub[2:fin]
+                    client.carmod(ced,license, Vin, color, brand)
+                    Client()
             #Pagina de modificación del carro
             for ele in app.winfo_children():
                 ele.destroy()
             interfaz = Canvas(app)
             interfaz.pack()
+            #Fondo
+            backgroundC = Label(interfaz, image=imagen3_Modicar)
+            backgroundC.pack()
+            #Botones laterales
+            #Boton configuración
+            btnconfig = Button(app, image=btnconfigure, borderwidth=0,command=configure)
+            btnconfig.place(x=0, y = 235, height=87, width=222)
+            #Boton pay
+            btncar = Button(app, image=btnPays, borderwidth=0, command=Client)
+            btncar.place(x=0, y = 179, height=56, width=222)
+            #Campos de text
+            txtLplate = Entry(app, bg="grey89",font=30)
+            txtLplate.place(x=245, y=220, width=275, height=55)
+            txtVinN = Entry(app, bg="grey89",font=30)
+            txtVinN.place(x=557, y=220, width=275, height=55)
+            txtBrand = Entry(app, bg="grey89",font=30)
+            txtBrand.place(x=245, y=339, width=275, height=55)
+            txtColor = Entry(app, bg="grey89",font=30)
+            txtColor.place(x=557, y=339, width=275, height=55)
+            #Label para errores
+            ErrorLplate = Label(app, text="", font=20,
+                            fg="#E41111", bg="#FAFBFD")
+            ErrorLplate.place(x=245, y=276)
+            ErrorVinN = Label(app, text="", font=20,
+                            fg="#E41111", bg="#FAFBFD")
+            ErrorVinN.place(x=557, y=276)
+            ErrorBrand = Label(app, text="", font=20,
+                                fg="#E41111", bg="#FAFBFD")
+            ErrorBrand.place(x=245, y=400)
+            ErrorColor = Label(app, text="", font=20,
+                            fg="#E41111", bg="#FAFBFD")
+            ErrorColor.place(x=557, y=400)
+            #Boton de modificar telefono
+            btnCTelephone = Button(app, image=btnChangeCar, borderwidth=0, command=modify)
+            btnCTelephone.place(x=246, y=433, height=41, width=111)
         def addMoney():
             def payM():
                 ErrorCVV.config(text="")

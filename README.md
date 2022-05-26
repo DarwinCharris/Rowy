@@ -17,4 +17,4 @@ Información para usar el programa:
 -Para entrar como administrador usar el correo: anaa@rowy.com Contraseña: 123ana
 
 # Uml Diagram
-<img src="Anteproyecto.png" alt="Diagrama"/>
+<img src="RowyUML.png" alt="Diagrama"/>

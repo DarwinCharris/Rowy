@@ -1,5 +1,4 @@
 @startuml
-'fig_5'
 left to right direction
 skinparam monochrome true
 skinparam handwritten false
@@ -7,70 +6,62 @@ hide class circle
 skinparam shadowing false
 skinparam classAttributeIconSize 0
 
-class plan1{
+class Plan1{
 +complainmentRequest(): none
-Maintence(): date
 }
 
-class plan2{
+class Plan2{
 +Maintence(): date
 }
 
-class plan3{
+class Plan3{
+
 }
 
-class plan{
-+ver(): bool
+class Plan{
 +pay(): none
-+vehicleTax(): none
-+soat(): none
-+tecnimechanic(): none
++addMoney(): none
 }
 class client_car{
 -licensePlate:string
 -numVIN: string
--dateB: date
+-Money: String
 -color: string
 -brand: string
 -origin: string
 }
 class clientedata{
--cedula: int
+-cedula: string
 -name: string
 -lastname: string
--plan: int
--telephone: int
--paydate: date
+-plan: string
+-telephone: string
+-paydate: string
 #cardnumber: string
 #expdate: string
 #cod: int
+-mail: string
+-password: string
 +carMod(): none
-+modCard(): none
++modPassword(): none
 +modNum(): none
 }
 class admin{
 -name: string
 -lastname: string
--telephone: int
--salary: float
+-mail: string
+-password: string
 +addclient(): none
 +removeclient(): none
 +modClient(): none
 +modNum(): none
 }
-class User{
--userid: string
--mail: string
--password: string
--status: string
--registerDate: date
-+verifyLogin(): bool
-}
-plan1  ---> plan: >
-plan2  ---> plan: >
-plan3  ---> plan: >
-plan "1"---* client_car: >
+
+Plan1  ---> Plan: >
+Plan2  ---> Plan: >
+Plan "1"---* client_car: >
 client_car "1"---> clientedata: >
-admin ---> User: >
-clientedata ---> User: >
+Plan2 ---> Plan1:>
+Plan3 ---> Plan:>
+
 @enduml
