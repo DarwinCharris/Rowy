@@ -18,4 +18,3 @@ Información para usar el programa:
 
 # Uml Diagram
 <img src="RowyUML.png" alt="Diagrama"/>
-<div style="text-align:center;"><div style="margin:8px 0px 4px;"><a href="https://www.calameo.com/books/0055204286d6870761105" target="_blank">El Sistema Solar</a></div><iframe src="//v.calameo.com/?bkcode=0055204286d6870761105" width="300" height="194" frameborder="0" scrolling="no" allowtransparency allowfullscreen style="margin:0 auto;"></iframe><div style="margin:4px 0px 8px;"><a href="http://www.calameo.com/">Publish at Calameo</a></div></div>
