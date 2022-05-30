@@ -8,7 +8,8 @@ Contraseña: 123ana
 Correo: jd@gmail.com
 Contraseña: 12345
 CVV: 032
-# Diagrama UML de clases
-<img src="RowyUML.png" alt="Diagrama"/>
 # Guia de usuario
 Agregar link
+# Diagrama UML de clases
+<img src="RowyUML.png" alt="Diagrama"/>
+
