@@ -4,7 +4,7 @@ El programa presenta como solución hacer el pago de los impuestos de tu carro d
 ## Para probar el apartado de administradores:
 Correo: anaa@rowy.com
 Contraseña: 123ana
-##Para probar el apartado de clientes
+## Para probar el apartado de clientes
 Correo: jd@gmail.com
 Contraseña: 12345
 CVV: 032
