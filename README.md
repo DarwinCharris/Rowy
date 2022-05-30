@@ -18,4 +18,4 @@ Información para usar el programa:
 
 # Uml Diagram
 <img src="RowyUML.png" alt="Diagrama"/>
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTcG0M9yUSSffjw10FDAL8yQjBo0Y9Dqt67fW5-252ALkWe18DZF3_WmV1hqE4AV8YwwNR3g0hRUKpB/embed?start=true&loop=true&delayms=60000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTcG0M9yUSSffjw10FDAL8yQjBo0Y9Dqt67fW5-252ALkWe18DZF3_WmV1hqE4AV8YwwNR3g0hRUKpB/embed?></iframe>
