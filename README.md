@@ -10,4 +10,5 @@ Contraseña: 12345
 CVV: 032
 # Diagrama UML de clases
 <img src="RowyUML.png" alt="Diagrama"/>
-# Guia de usuarip
+# Guia de usuario
+(url)
