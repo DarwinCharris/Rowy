@@ -676,10 +676,10 @@ def Mainmenu():
                 return text.isdecimal()
             txtPlan = Entry(app, bg="grey89", validate="key",
                         validatecommand=(app.register(validate_cc), "%S"),font=30)
-            txtPlan.place(x=241, y=244, width=275, height=55)
+            txtPlan.place(x=241, y=246, width=275, height=55)
             txtCedula = Entry(app, bg="grey89", validate="key",
                         validatecommand=(app.register(validate_cc), "%S"),font=30)
-            txtCedula.place(x=563, y=244, width=275, height=55)
+            txtCedula.place(x=563, y=246, width=275, height=55)
             #Contraseña
             txtmail = Entry(app, bg="grey89",font=30)
             txtmail.place(x=241, y=379, width=275, height=55)
