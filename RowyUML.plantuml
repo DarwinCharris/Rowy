@@ -57,11 +57,11 @@ class admin{
 +modNum(): none
 }
 
-Plan1  ---> Plan: >
-Plan2  ---> Plan: >
-Plan "1"---* client_car: >
-client_car "1"---> clientedata: >
-Plan2 ---> Plan1:>
-Plan3 ---> Plan:>
+Plan  ---> Plan1: >
+Plan  ---> Plan2: >
+client_car "1"---* Plan: >
+clientedata "1"---> client_car: >
+Plan1 ---> Plan2:>
+Plan ---> Plan3:>
 
 @enduml
