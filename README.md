@@ -15,6 +15,11 @@ Correo: jd@gmail.com
 Contraseña: 12345
 CVV: 032
 ```
+## Comando de instalación 💻
+```
+Para poder usar el programa debes ejecutar el siguiente comando en una terminar de VSCode
+pip install mysql connector python
+```
 # Guia de usuario
 👉https://www.calameo.com/read/00552042814c502e5e273
 # Diagrama UML de clases 🔍
